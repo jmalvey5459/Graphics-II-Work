@@ -1,0 +1,5 @@
+﻿  main_dll.c
+  a3_DemoSceneObject.c
+  a3_demo_callbacks.c
+  a3_DemoState.c
+MSBUILD : error MSB4166: Child node "2" exited prematurely. Shutting down. Diagnostic information may be found in files in the temporary files directory named MSBuild_*.failure.txt.
