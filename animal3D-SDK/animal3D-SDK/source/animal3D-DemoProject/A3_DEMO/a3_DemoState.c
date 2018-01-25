@@ -163,11 +163,11 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 		//floor
 		a3proceduralCreateDescriptorPlane(proceduralShapes + 0, a3geomFlag_texcoords, a3geomAxis_default, 100.0f, 100.0f, 1, 1);
 		//ball
-		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_texcoords, a3geomAxis_default, 3.0f, 255, 255);
+		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_texcoords, a3geomAxis_default, 2.0f, 255, 255);
 		//cylinder
-		a3proceduralCreateDescriptorCylinder(proceduralShapes + 2, a3geomFlag_texcoords, a3geomAxis_default, 1.0f, 4.0f, 255, 255, 255);
+		a3proceduralCreateDescriptorCylinder(proceduralShapes + 2, a3geomFlag_texcoords, a3geomAxis_x, 1.0f, 4.0f, 255, 255, 255);
 		//torus
-		a3proceduralCreateDescriptorTorus(proceduralShapes + 3, a3geomFlag_texcoords, a3geomAxis_default, 2.0f, 1.0f, 255, 255);
+		a3proceduralCreateDescriptorTorus(proceduralShapes + 3, a3geomFlag_texcoords, a3geomAxis_y, 2.5f, 0.5f, 255, 255);
 		for (i = 0; i < proceduralShapesCount; ++i)
 		{
 			// ****DONE: generate geometry data from descriptor
@@ -254,11 +254,31 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 	currentDrawable = demoState->draw_teapot;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, loadedModelsData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 
-	// ****TO-DO: upload PROCEDURAL geometry data by generating drawables
+	// ****DONE: upload PROCEDURAL geometry data by generating drawables
 	// (see above examples for the scene shapes and loaded model)
 	//	for each drawable, set 'currentDrawable' pointer, then
 	//	generate the drawable from the respective data
-
+	
+	//floor
+	vao = demoState->vao_position_texcoord;
+	a3geometryGenerateVertexArray(vao, proceduralShapesData + 0, vbo_ibo, sharedVertexStorage);
+	currentDrawable = demoState->draw_groundPlane;
+	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
+	//ball
+	vao = demoState->vao_position_texcoord;
+	a3geometryGenerateVertexArray(vao, proceduralShapesData + 1, vbo_ibo, sharedVertexStorage);
+	currentDrawable = demoState->draw_sphere;
+	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 1, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
+	//cylinder
+	vao = demoState->vao_position_texcoord;
+	a3geometryGenerateVertexArray(vao, proceduralShapesData + 2, vbo_ibo, sharedVertexStorage);
+	currentDrawable = demoState->draw_cylinder;
+	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 2, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
+	//torus
+	vao = demoState->vao_position_texcoord;
+	a3geometryGenerateVertexArray(vao, proceduralShapesData + 3, vbo_ibo, sharedVertexStorage);
+	currentDrawable = demoState->draw_torus;
+	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 3, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 	
 	// release data when done
 	for (i = 0; i < sceneShapesCount; ++i)
@@ -327,7 +347,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	//	{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/e/drawColorAttrib_fs4x.glsl" } },
 
 
-		// ****TO-DO: COMPLETE THE FILES LISTED BELOW
+		// ****DONE: COMPLETE THE FILES LISTED BELOW
 		// (use the above commented files to test)
 		// (this will be very useful when we get to multi-pass)
 		// (the difference is just the '/e' before the file name)
@@ -776,6 +796,8 @@ void a3demo_render(const a3_DemoState *demoState)
 	glCullFace(GL_BACK);
 
 
+	
+
 	// draw objects: 
 	//	- correct "up" axis if needed
 	//	- calculate full MVP matrix
@@ -784,7 +806,7 @@ void a3demo_render(const a3_DemoState *demoState)
 	//	- draw
 
 	// draw models
-	// ****TO-DO: 
+	// ****DONE: 
 	//	- after visualizing the scene with rotating solid-color objects, 
 	//		change to the other shader program and modify the vertex shader 
 	//		"passColor_transform_vs4x" to visualize different attributes... 
@@ -807,6 +829,54 @@ void a3demo_render(const a3_DemoState *demoState)
 
 	// ****TO-DO: DRAW GEOMETRY
 	// (use the above scene objects for the procedure/steps to draw)
+
+	// ball
+	currentDrawable = demoState->draw_sphere;
+	currentSceneObject = demoState->sphereObject;
+
+	modelMat = currentSceneObject->modelMat;
+	a3real4x4TransformInverseIgnoreScale(modelMatInv.m, modelMat.m);
+	a3real4x4Product(modelViewProjectionMat.m, demoState->camera->viewProjectionMat.m, modelMat.m);
+
+	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, modelViewProjectionMat.mm);
+	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, red);
+	a3vertexActivateAndRenderDrawable(currentDrawable);
+
+	//cylinder
+	currentDrawable = demoState->draw_cylinder;
+	currentSceneObject = demoState->cylinderObject;
+
+	modelMat = currentSceneObject->modelMat;
+	a3real4x4TransformInverseIgnoreScale(modelMatInv.m, modelMat.m);
+	a3real4x4Product(modelViewProjectionMat.m, demoState->camera->viewProjectionMat.m, modelMat.m);
+
+	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, modelViewProjectionMat.mm);
+	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, green);
+	a3vertexActivateAndRenderDrawable(currentDrawable);
+
+	//torus
+	currentDrawable = demoState->draw_torus;
+	currentSceneObject = demoState->torusObject;
+
+	modelMat = currentSceneObject->modelMat;
+	a3real4x4TransformInverseIgnoreScale(modelMatInv.m, modelMat.m);
+	a3real4x4Product(modelViewProjectionMat.m, demoState->camera->viewProjectionMat.m, modelMat.m);
+
+	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, modelViewProjectionMat.mm);
+	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, blue);
+	a3vertexActivateAndRenderDrawable(currentDrawable);
+
+	//teapot i guess?
+	currentDrawable = demoState->draw_teapot;
+	currentSceneObject = demoState->teapotObject;
+
+	modelMat = currentSceneObject->modelMat;
+	a3real4x4TransformInverseIgnoreScale(modelMatInv.m, modelMat.m);
+	a3real4x4Product(modelViewProjectionMat.m, demoState->camera->viewProjectionMat.m, modelMat.m);
+
+	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, modelViewProjectionMat.mm);
+	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, orange);
+	a3vertexActivateAndRenderDrawable(currentDrawable);
 
 
 	glDisable(GL_DEPTH_TEST);
