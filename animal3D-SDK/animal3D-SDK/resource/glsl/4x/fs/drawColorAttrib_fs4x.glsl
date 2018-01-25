@@ -31,11 +31,11 @@
 //	2) assign vertex color to output color
 
 out vec4 rtFragColor;
-
-varying vec4 vertexColor;
+in vec4 vColorOut;
 
 void main()
 {
+// default red, the entire dimension indicator thing is red so im obviously doing something wrong with the varying color
 	rtFragColor = vec4(1.0, 0.0, 0.0, 1.0);
-	vertexColor = rtFragColor;
+	rtFragColor = vColorOut;
 }

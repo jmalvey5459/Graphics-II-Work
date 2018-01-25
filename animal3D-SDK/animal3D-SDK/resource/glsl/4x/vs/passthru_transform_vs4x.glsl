@@ -28,10 +28,10 @@
 
 layout (location = 0) in vec4 aPosition;
 
-uniform mat4 MVP;
+uniform mat4 uMVP;
 
 void main()
 {
 	//transform input position by MVP matrix 
-	gl_Position = MVP * aPosition;
+	gl_Position = uMVP * aPosition;
 }
