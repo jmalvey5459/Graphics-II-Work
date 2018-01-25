@@ -156,14 +156,25 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 		}
 
 		// other procedurally-generated objects
-		// ****TO-DO: create procedural geometry descriptors
+		// ****DONE: create procedural geometry descriptors
 		//	(tessellated plane for ground, sphere, torus, cylinder)
 		//	(see above for examples)
 
+		//floor
+		a3proceduralCreateDescriptorPlane(proceduralShapes + 0, a3geomFlag_texcoords, a3geomAxis_default, 100.0f, 100.0f, 1, 1);
+		//ball
+		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_texcoords, a3geomAxis_default, 3.0f, 255, 255);
+		//cylinder
+		a3proceduralCreateDescriptorCylinder(proceduralShapes + 2, a3geomFlag_texcoords, a3geomAxis_default, 1.0f, 4.0f, 255, 255, 255);
+		//torus
+		a3proceduralCreateDescriptorTorus(proceduralShapes + 3, a3geomFlag_texcoords, a3geomAxis_default, 2.0f, 1.0f, 255, 255);
 		for (i = 0; i < proceduralShapesCount; ++i)
 		{
-			// ****TO-DO: generate geometry data from descriptor
+			// ****DONE: generate geometry data from descriptor
 			// (see above for example, be sure to use the correct data array)
+			a3proceduralGenerateGeometryData(proceduralShapesData + i, proceduralShapes + i);
+			a3fileStreamWriteObject(fileStream, proceduralShapesData + i, (a3_FileStreamWriteFunc)a3geometrySaveDataBinary);
+
 		}
 
 		// objects loaded from mesh files
