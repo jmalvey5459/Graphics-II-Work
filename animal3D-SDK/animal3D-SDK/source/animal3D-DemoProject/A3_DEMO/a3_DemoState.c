@@ -25,6 +25,12 @@
 	*** THIS IS YOUR DEMO'S MAIN SOURCE FILE ***
 	*** Implement your demo logic here.      ***
 	********************************************
+
+	
+
+	Certifcate of Authenticity:
+	This file was modified by Jack Malvey with permission from author.
+
 */
 
 
@@ -160,18 +166,25 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 		//	(tessellated plane for ground, sphere, torus, cylinder)
 		//	(see above for examples)
 
+		///originally thought the flags were supposed to be text coords like the box, turns out it should be tangents like the teapot
+
 		//floor
-		a3proceduralCreateDescriptorPlane(proceduralShapes + 0, a3geomFlag_texcoords, a3geomAxis_default, 100.0f, 100.0f, 1, 1);
+		a3proceduralCreateDescriptorPlane(proceduralShapes + 0, a3geomFlag_tangents, a3geomAxis_default, 40.0f, 40.0f, 1, 1);
 		//ball
-		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_texcoords, a3geomAxis_default, 2.0f, 255, 255);
+		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_tangents, a3geomAxis_default, 2.0f, 255, 255);
 		//cylinder
-		a3proceduralCreateDescriptorCylinder(proceduralShapes + 2, a3geomFlag_texcoords, a3geomAxis_x, 1.0f, 4.0f, 255, 255, 255);
+		a3proceduralCreateDescriptorCylinder(proceduralShapes + 2, a3geomFlag_tangents, a3geomAxis_x, 1.0f, 4.0f, 255, 255, 255);
 		//torus
-		a3proceduralCreateDescriptorTorus(proceduralShapes + 3, a3geomFlag_texcoords, a3geomAxis_y, 2.5f, 0.5f, 255, 255);
+		a3proceduralCreateDescriptorTorus(proceduralShapes + 3, a3geomFlag_tangents, a3geomAxis_y, 2.25f, 0.5f, 255, 255);
+
+		///all descriptors made from comparing values to the included complete demo and modifying them until they looked right
+
 		for (i = 0; i < proceduralShapesCount; ++i)
 		{
 			// ****DONE: generate geometry data from descriptor
 			// (see above for example, be sure to use the correct data array)
+			
+			///same as the above data, but procedural subbed in for scene
 			a3proceduralGenerateGeometryData(proceduralShapesData + i, proceduralShapes + i);
 			a3fileStreamWriteObject(fileStream, proceduralShapesData + i, (a3_FileStreamWriteFunc)a3geometrySaveDataBinary);
 
@@ -258,24 +271,25 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 	// (see above examples for the scene shapes and loaded model)
 	//	for each drawable, set 'currentDrawable' pointer, then
 	//	generate the drawable from the respective data
-	
+
+	///since the teapot uses proceduralshapesdata + 0 and then loadedmodelsdata +0, just flip them around for the floor.
+	///i don't know why this works. after messing around for almost a 3rd of the time i worked on this, i just figured it was worth a shot.
+	/// my best guess is that is has something to do with vertex array being overwritten
 	//floor
-	vao = demoState->vao_position_texcoord;
-	a3geometryGenerateVertexArray(vao, proceduralShapesData + 0, vbo_ibo, sharedVertexStorage);
+	a3geometryGenerateVertexArray(vao, loadedModelsData + 0, vbo_ibo, sharedVertexStorage);
 	currentDrawable = demoState->draw_groundPlane;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
+
+	///modeled after the above data generation
 	//ball
-	vao = demoState->vao_position_texcoord;
 	a3geometryGenerateVertexArray(vao, proceduralShapesData + 1, vbo_ibo, sharedVertexStorage);
 	currentDrawable = demoState->draw_sphere;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 1, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 	//cylinder
-	vao = demoState->vao_position_texcoord;
 	a3geometryGenerateVertexArray(vao, proceduralShapesData + 2, vbo_ibo, sharedVertexStorage);
 	currentDrawable = demoState->draw_cylinder;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 2, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 	//torus
-	vao = demoState->vao_position_texcoord;
 	a3geometryGenerateVertexArray(vao, proceduralShapesData + 3, vbo_ibo, sharedVertexStorage);
 	currentDrawable = demoState->draw_torus;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 3, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
@@ -830,6 +844,8 @@ void a3demo_render(const a3_DemoState *demoState)
 	// ****TO-DO: DRAW GEOMETRY
 	// (use the above scene objects for the procedure/steps to draw)
 
+	
+
 	// ball
 	currentDrawable = demoState->draw_sphere;
 	currentSceneObject = demoState->sphereObject;
@@ -866,18 +882,18 @@ void a3demo_render(const a3_DemoState *demoState)
 	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, blue);
 	a3vertexActivateAndRenderDrawable(currentDrawable);
 
-	//teapot i guess?
+	//teapot 
 	currentDrawable = demoState->draw_teapot;
 	currentSceneObject = demoState->teapotObject;
 
 	modelMat = currentSceneObject->modelMat;
 	a3real4x4TransformInverseIgnoreScale(modelMatInv.m, modelMat.m);
 	a3real4x4Product(modelViewProjectionMat.m, demoState->camera->viewProjectionMat.m, modelMat.m);
-
+	///command found near "grid aligned world":
+	a3real4x4ConcatL(modelViewProjectionMat.m, convertY2Z.m);
 	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uMVP, 1, modelViewProjectionMat.mm);
 	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, orange);
 	a3vertexActivateAndRenderDrawable(currentDrawable);
-
 
 	glDisable(GL_DEPTH_TEST);
 

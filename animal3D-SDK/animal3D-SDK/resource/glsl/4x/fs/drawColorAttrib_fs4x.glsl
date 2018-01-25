@@ -22,6 +22,10 @@
 	Draw color attribute passed from prior stage as varying.
 
 	**DO NOT MODIFY THIS FILE**
+	
+	Certifcate of Authenticity:
+	This file was modified by Jack Malvey with permission from author.
+
 */
 
 #version 410

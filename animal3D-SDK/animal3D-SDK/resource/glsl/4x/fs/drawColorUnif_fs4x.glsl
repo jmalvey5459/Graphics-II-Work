@@ -22,6 +22,10 @@
 	Draw uniform solid color.
 
 	**DO NOT MODIFY THIS FILE**
+	
+	Certifcate of Authenticity:
+	This file was modified by Jack Malvey with permission from author.
+
 */
 
 #version 410
