@@ -31,10 +31,29 @@
 //	4) pass data to next shader
 
 layout (location = 0) in vec4 aPosition;
+layout (location = 2) in vec3 aNormal;
+layout (location = 8) in vec2 aTexcoord;
+
+uniform mat4 uMVP;
+uniform vec4 uLightPos_obj; 
+
+
+out vec3 vPassNormal;
+out vec3 vPassLighting;
+out vec2 vPassTexcoord;
+
 
 uniform mat4 uMVP;
 
 void main()
 {
 	gl_Position = uMVP * aPosition;
+
+
+//texturing
+	vPassTexcoord = aTexcoord;
+
+//lighting 
+	vPassNormal = aNormal;
+	vPassLighting = (uLightPos_obj.xyz - aPosition.xyz);
 }

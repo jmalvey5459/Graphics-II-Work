@@ -28,16 +28,26 @@
 //	1) declare varyings to receive data from vertex shader
 //	2) declare uniform variable for texture; see demo code for hints
 //	3) grab sample from texture
+uniform sampler2D uTex_dm;
+
+in vec2 vPassTexcoord;
+in vec3 vPassNormal;
+in vec3 vPassLighting;
+
 vec4 diffuseSample = texture(uTex_dm, vPassTexcoord);
 //	4) calculate diffuse coefficient
 //	5) calculate Lambertian shading model 
 //	6) assign result to output color
-
 out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE GREEN
 	//rtFragColor = vec4(0.0, 1.0, 0.0, 1.0);
+	vec3 L = normalize(vPassLighting);
+	vec3 N = normalize(vPassNormal);
+	float diffuse = dot(N,L);
 	rtFragColor = diffuseSample;
+	
+	rtFragColor.rgb *= diffuse;
 }

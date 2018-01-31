@@ -31,11 +31,23 @@
 //	4) calculate diffuse and specular coefficients
 //	5) calculate Phong shading model 
 //	6) assign result to output color
+uniform sampler2D uTex_dm;
+
+in vec2 vPassTexcoord;
+in vec3 vPassNormal;
+in vec3 vPassLighting;
+
 
 out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE BLUE
-	rtFragColor = vec4(0.0, 0.0, 1.0, 1.0);
+	//rtFragColor = vec4(0.0, 0.0, 1.0, 1.0);
+	vec3 L = normalize(vPassLighting);
+	vec3 N = normalize(vPassNormal);
+	float diffuse = dot(N,L);
+	vec4 diffuseSample = texture(uTex_dm, vPassTexcoord);
+	rtFragColor = diffuseSample;
+	
 }

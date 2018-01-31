@@ -35,7 +35,7 @@ layout (location = 2) in vec3 aNormal;
 
 uniform mat4 uMVP;
 
-uniform mat4 uLightPos_obj; 
+uniform vec4 uLightPos_obj; 
 
 
 //per vertex
@@ -55,7 +55,7 @@ void main()
 	//^^^^ this is definitely going to be on the quiz on monday
 	//vShading = diffuse;
 	vPassNormal = aNormal;
-	vPassLight = (uLightPos_obj - aPosition.xyz);
+	vPassLighting = (uLightPos_obj.xyz - aPosition.xyz);
 
 }
 
