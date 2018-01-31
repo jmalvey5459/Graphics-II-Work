@@ -32,11 +32,13 @@
 //	5) calculate Phong shading model 
 //	6) assign result to output color
 uniform sampler2D uTex_dm;
+uniform sampler2D uTex_sm;
 
-in vec2 vPassTexcoord;
-in vec3 vPassNormal;
-in vec3 vPassLighting;
 
+in vec2 vPhongPassTexcoord;
+in vec3 vPhongPassNormal;
+in vec3 vPhongPassLighting;
+in vec3 vPhongPassView;
 
 out vec4 rtFragColor;
 
@@ -44,10 +46,37 @@ void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE BLUE
 	//rtFragColor = vec4(0.0, 0.0, 1.0, 1.0);
-	vec3 L = normalize(vPassLighting);
-	vec3 N = normalize(vPassNormal);
+	//diffuse
+	vec3 L = normalize(vPhongPassLighting);
+	vec3 N = normalize(vPhongPassNormal);
 	float diffuse = dot(N,L);
-	vec4 diffuseSample = texture(uTex_dm, vPassTexcoord);
-	rtFragColor = diffuseSample;
+	diffuse = max(0.0, diffuse);
+
+	//reflection
+	vec3 R = (diffuse + diffuse) * N - L;
+
+	//specular
+	vec3 V = normalize(vPhongPassView);
+	float specular = dot(V, R);
+
+
+	specular = max(0.0, specular);
+	
+	specular *= specular;
+	specular *= specular;
+	specular *= specular;
+
+	//phong
+	
+	vec3 ambient = vec3(0,0,0.1);
+	vec3 phong = diffuse + ambient;
+	
+	//all together now!
+	vec4 earth = texture(uTex_dm, vPhongPassTexcoord);
+	vec4 water = texture(uTex_sm, vPhongPassTexcoord);
+	earth.rgb *= phong;
+	water.rgb *= specular;
+	water.a = 0;
+	rtFragColor = earth + water;
 	
 }

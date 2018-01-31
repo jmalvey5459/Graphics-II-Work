@@ -95,8 +95,10 @@ void a3demo_loadTextures(a3_DemoState *demoState)
 		"../../../../resource/tex/earth/2k/earth_dm_2k.png",
 		"../../../../resource/tex/earth/2k/earth_sm_2k.png",
 
-		// ****TO-DO: 
+		// ****DONE: 
 		//	- add more texture paths corresponding with your new texture objects
+		"../../../../resource/tex/earth/2k/earth_toon_2k.png",
+
 	};
 	const unsigned int numTextures = sizeof(texFiles) / sizeof(const char *);
 
@@ -130,9 +132,11 @@ void a3demo_loadTextures(a3_DemoState *demoState)
 	a3textureChangeRepeatMode(a3tex_repeatNormal, a3tex_repeatClamp);
 	a3textureChangeFilterMode(a3tex_filterLinear);
 
-	// ****TO-DO: 
+	// ****DONE: 
 	//	- initialize your new textures here
-
+	a3textureActivate(demoState->tex_earth_toon, a3tex_unit00);
+	a3textureChangeRepeatMode(a3tex_repeatNormal, a3tex_repeatClamp);
+	a3textureChangeFilterMode(a3tex_filterLinear);
 
 	// done
 	a3textureDeactivate(a3tex_unit00);
@@ -382,6 +386,13 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// base
 			a3_Shader drawColorUnif_fs[1];
 			a3_Shader drawColorAttrib_fs[1];
+			//homework
+			a3_Shader drawCel_fs[1];
+			a3_Shader drawGooch_fs[1];
+			a3_Shader drawCelGooch_fs[1];
+			a3_Shader drawTF2_fs[1];
+			a3_Shader drawSelective_fs[1];
+
 		};
 	} shaderList = { 0 };
 	a3_Shader *const shaderListPtr = (a3_Shader *)(&shaderList);
@@ -421,6 +432,14 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// base
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/drawColorUnif_fs4x.glsl" } },
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/drawColorAttrib_fs4x.glsl" } },
+		//homework
+		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+
+		
 	};
 
 	// load unique shaders: 

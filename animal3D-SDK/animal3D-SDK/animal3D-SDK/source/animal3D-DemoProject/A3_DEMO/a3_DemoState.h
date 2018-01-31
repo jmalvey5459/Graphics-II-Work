@@ -71,7 +71,7 @@ extern "C"
 		demoStateMaxCount_drawDataBuffer = 1,
 		demoStateMaxCount_vertexArray = 4,
 		demoStateMaxCount_drawable = 8,
-		demoStateMaxCount_shaderProgram = 8,
+		demoStateMaxCount_shaderProgram = 11,
 	};
 
 
@@ -175,10 +175,11 @@ extern "C"
 					tex_sky_water[1],					// skybox with water
 					tex_stone_dm[1],					// stone diffuse texture
 					tex_earth_dm[1],					// earth diffuse texture
-					tex_earth_sm[1];					// earth specular texture
+					tex_earth_sm[1],					// earth specular texture
 
-				// ****TO-DO: 
+				// ****DONE: 
 				//	- declare more textures
+					tex_earth_toon[1]; //earth texture for cel shading
 			};
 		};
 
@@ -225,7 +226,7 @@ extern "C"
 			a3_DemoStateShaderProgram shaderProgram[demoStateMaxCount_shaderProgram];
 			struct {
 				a3_DemoStateShaderProgram
-					// ****TO-DO: 
+					// ****DONE: 
 					//	- declare more programs
 
 					prog_drawPhong[1],					// draw Phong shading model
@@ -234,7 +235,17 @@ extern "C"
 					prog_drawTexture[1],				// draw sample from texture
 
 					prog_drawColor[1],					// draw color attribute
-					prog_drawColorUnif[1];				// draw uniform color
+					prog_drawColorUnif[1],				// draw uniform color
+
+					prog_drawCel[1],					//draw cel shading model
+					prog_drawGooch[1],					//draw gooch shading model
+
+					prog_drawCelGooch[1],				//draw cel-gooch combined model
+					prog_drawTF2[1],					//draw tf2 shading model
+
+				// ****TO-DO: 
+				// - declare cross hatch or selective programs
+					prog_drawSelective[1];
 			};
 		};
 

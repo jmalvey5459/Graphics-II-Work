@@ -35,15 +35,14 @@ layout (location = 2) in vec3 aNormal;
 layout (location = 8) in vec2 aTexcoord;
 
 uniform mat4 uMVP;
+uniform vec4 uEyePos_obj;
 uniform vec4 uLightPos_obj; 
 
+out vec3 vPhongPassNormal;
+out vec3 vPhongPassLighting;
+out vec2 vPhongPassTexcoord;
+out vec3 vPhongPassView;
 
-out vec3 vPassNormal;
-out vec3 vPassLighting;
-out vec2 vPassTexcoord;
-
-
-uniform mat4 uMVP;
 
 void main()
 {
@@ -51,9 +50,13 @@ void main()
 
 
 //texturing
-	vPassTexcoord = aTexcoord;
+	vPhongPassTexcoord = aTexcoord;
 
 //lighting 
-	vPassNormal = aNormal;
-	vPassLighting = (uLightPos_obj.xyz - aPosition.xyz);
+	vPhongPassNormal = aNormal;
+	vPhongPassLighting = (uLightPos_obj.xyz - aPosition.xyz);
+
+//reflection
+	vPhongPassView = (uEyePos_obj.xyz - aPosition.xyz);
+
 }

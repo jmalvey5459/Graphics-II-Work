@@ -47,7 +47,9 @@ void main()
 	vec3 L = normalize(vPassLighting);
 	vec3 N = normalize(vPassNormal);
 	float diffuse = dot(N,L);
+
+	diffuse = max(0.0, diffuse);
+
 	rtFragColor = diffuseSample;
-	
 	rtFragColor.rgb *= diffuse;
 }
