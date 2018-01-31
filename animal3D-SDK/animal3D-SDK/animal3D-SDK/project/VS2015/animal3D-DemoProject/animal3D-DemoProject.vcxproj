@@ -198,6 +198,11 @@
     <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawTexture_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorAttrib_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorUnif_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawCelGooch_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawCel_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawGooch_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawSelective_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawTF2_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passDiffuseComponents_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passLambertComponents_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passPhongComponents_transform_vs4x.glsl" />

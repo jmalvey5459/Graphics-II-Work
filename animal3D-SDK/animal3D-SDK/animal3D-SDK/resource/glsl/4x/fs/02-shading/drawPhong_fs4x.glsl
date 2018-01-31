@@ -50,7 +50,6 @@ void main()
 	vec3 L = normalize(vPhongPassLighting);
 	vec3 N = normalize(vPhongPassNormal);
 	float diffuse = dot(N,L);
-	diffuse = max(0.0, diffuse);
 
 	//reflection
 	vec3 R = (diffuse + diffuse) * N - L;
@@ -60,6 +59,7 @@ void main()
 	float specular = dot(V, R);
 
 
+	diffuse = max(0.0, diffuse);
 	specular = max(0.0, specular);
 	
 	specular *= specular;

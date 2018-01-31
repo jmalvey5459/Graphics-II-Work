@@ -55,6 +55,9 @@
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\02-shading">
       <UniqueIdentifier>{3f45b2e1-bdac-4173-9c1e-f02188974a66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\homework-shading">
+      <UniqueIdentifier>{275702fc-f3b3-436c-935b-b8dd326acfc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_src_win\main_dll.c">
@@ -120,6 +123,21 @@
     </None>
     <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawDiffuse_fs4x.glsl">
       <Filter>Resource Files\A3_DEMO\glsl\4x\fs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawCel_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\homework-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawCelGooch_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\homework-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawGooch_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\homework-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawSelective_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\homework-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\homework-shading\drawTF2_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\homework-shading</Filter>
     </None>
   </ItemGroup>
 </Project>

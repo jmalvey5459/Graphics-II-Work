@@ -67,7 +67,7 @@ extern "C"
 		demoStateMaxCount_sceneObject = 8,
 		demoStateMaxCount_camera = 1,
 		demoStateMaxCount_timer = 1,
-		demoStateMaxCount_texture = 8,
+		demoStateMaxCount_texture = 9,
 		demoStateMaxCount_drawDataBuffer = 1,
 		demoStateMaxCount_vertexArray = 4,
 		demoStateMaxCount_drawable = 8,
@@ -179,7 +179,8 @@ extern "C"
 
 				// ****DONE: 
 				//	- declare more textures
-					tex_earth_toon[1]; //earth texture for cel shading
+					tex_ramp_dm[1], //cel diffuse map 
+					tex_ramp_sm[1];	//cel specular map
 			};
 		};
 
@@ -227,25 +228,26 @@ extern "C"
 			struct {
 				a3_DemoStateShaderProgram
 					// ****DONE: 
-					//	- declare more programs
-
+					//	- declare more programs		
+					prog_drawSelective[1],
+					prog_drawTF2[1],					//draw tf2 shading model
+					prog_drawCelGooch[1],				//draw cel-gooch combined model
+					prog_drawGooch[1],					//draw gooch shading model
+					prog_drawCel[1],					//draw cel shading model
 					prog_drawPhong[1],					// draw Phong shading model
 					prog_drawLambert[1],				// draw Lambert shading model
 					prog_drawDiffuse[1],				// draw diffuse coefficient
 					prog_drawTexture[1],				// draw sample from texture
 
 					prog_drawColor[1],					// draw color attribute
-					prog_drawColorUnif[1],				// draw uniform color
+					prog_drawColorUnif[1];				// draw uniform color
 
-					prog_drawCel[1],					//draw cel shading model
-					prog_drawGooch[1],					//draw gooch shading model
+					
 
-					prog_drawCelGooch[1],				//draw cel-gooch combined model
-					prog_drawTF2[1],					//draw tf2 shading model
 
 				// ****TO-DO: 
 				// - declare cross hatch or selective programs
-					prog_drawSelective[1];
+					
 			};
 		};
 

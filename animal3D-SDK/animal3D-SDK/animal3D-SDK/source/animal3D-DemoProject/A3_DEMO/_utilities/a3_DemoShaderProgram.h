@@ -70,6 +70,8 @@ extern "C"
 
 					// common fragment shader uniforms
 					uTexImage,
+					uTexToon_dm,
+					uTexToon_sm,
 					uTex_dm,					// diffuse map/surface texture
 					uTex_sm,					// specular map/reflective color
 					uColor;						// uniform color

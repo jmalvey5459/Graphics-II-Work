@@ -97,7 +97,8 @@ void a3demo_loadTextures(a3_DemoState *demoState)
 
 		// ****DONE: 
 		//	- add more texture paths corresponding with your new texture objects
-		"../../../../resource/tex/earth/2k/earth_toon_2k.png",
+		"../../../../resource/tex/sprite/celRamp_dm.png",
+		"../../../../resource/tex/sprite/celRamp_sm.png",
 
 	};
 	const unsigned int numTextures = sizeof(texFiles) / sizeof(const char *);
@@ -134,10 +135,14 @@ void a3demo_loadTextures(a3_DemoState *demoState)
 
 	// ****DONE: 
 	//	- initialize your new textures here
-	a3textureActivate(demoState->tex_earth_toon, a3tex_unit00);
-	a3textureChangeRepeatMode(a3tex_repeatNormal, a3tex_repeatClamp);
-	a3textureChangeFilterMode(a3tex_filterLinear);
 
+	a3textureActivate(demoState->tex_ramp_dm, a3tex_unit00);
+	a3textureChangeRepeatMode(a3tex_repeatClamp, a3tex_repeatClamp);
+	a3textureChangeFilterMode(a3tex_filterNearest);
+
+	a3textureActivate(demoState->tex_ramp_sm, a3tex_unit00);
+	a3textureChangeRepeatMode(a3tex_repeatClamp, a3tex_repeatClamp);
+	a3textureChangeFilterMode(a3tex_filterNearest);
 	// done
 	a3textureDeactivate(a3tex_unit00);
 }
@@ -345,6 +350,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 		// common fragment
 		"uTexImage",
+		"uTexToon_dm",
+		"uTexToon_sm",
 		"uTex_dm",
 		"uTex_sm",
 		"uColor",
@@ -378,6 +385,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3_Shader passColor_transform_vs[1];
 
 			// fragment shaders
+			//homework
+			a3_Shader drawCel_fs[1];
+			a3_Shader drawGooch_fs[1];
+			a3_Shader drawCelGooch_fs[1];
+			a3_Shader drawTF2_fs[1];
+			a3_Shader drawSelective_fs[1];
 			// 02
 			a3_Shader drawPhong_fs[1];
 			a3_Shader drawLambert_fs[1];
@@ -386,12 +399,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// base
 			a3_Shader drawColorUnif_fs[1];
 			a3_Shader drawColorAttrib_fs[1];
-			//homework
-			a3_Shader drawCel_fs[1];
-			a3_Shader drawGooch_fs[1];
-			a3_Shader drawCelGooch_fs[1];
-			a3_Shader drawTF2_fs[1];
-			a3_Shader drawSelective_fs[1];
+			
 
 		};
 	} shaderList = { 0 };
@@ -424,6 +432,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		{ a3shader_vertex,		1, { "../../../../resource/glsl/4x/vs/passColor_transform_vs4x.glsl" } },
 
 		// fs
+		//homework
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawCel_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawGooch_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawCelGooch_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawTF2_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawSelective_fs4x.glsl" } },
 		// 02
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/02-shading/drawPhong_fs4x.glsl" } },
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/02-shading/drawLambert_fs4x.glsl" } },
@@ -432,12 +446,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// base
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/drawColorUnif_fs4x.glsl" } },
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/drawColorAttrib_fs4x.glsl" } },
-		//homework
-		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
-		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
-		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
-		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
-		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/homework-shading/drawColorAttrib_fs4x.glsl" } },
+	
 
 		
 	};
@@ -461,6 +470,14 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	//	- configure your new shader programs here
 	//	- hint: the 'unique' shaders are already loaded; 
 	//		they are the building blocks for your programs
+
+
+	//homework
+
+	currentDemoProg = demoState->prog_drawCel;
+	a3shaderProgramCreate(currentDemoProg->program);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passPhongComponents_transform_vs);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawCel_fs);
 
 	// 02 programs
 	// Phong shading
@@ -501,7 +518,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passthru_transform_vs);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawColorUnif_fs);
 
-
 	// activate a primitive for validation
 	// makes sure the specified geometry can draw using programs
 	// good idea to activate the drawable with the most attributes
@@ -541,6 +557,10 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, a3wVec4.v);
 		if ((uLocation = currentDemoProg->uEyePos_obj) >= 0)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, a3wVec4.v);
+		if ((uLocation = currentDemoProg->uTexToon_dm) >= 0)
+			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultTexUnits + 0);
+		if ((uLocation = currentDemoProg->uTexToon_sm) >= 0)
+			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultTexUnits + 1);
 		if ((uLocation = currentDemoProg->uTex_dm) >= 0)
 			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultTexUnits + 0);
 		if ((uLocation = currentDemoProg->uTex_sm) >= 0)
@@ -550,6 +570,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 		// ****TO-DO: 
 		//	- get locations and set default values for any newly added uniforms
+		
+
 	}
 
 	//done
@@ -655,7 +677,7 @@ void a3demo_initScene(a3_DemoState *demoState)
 
 	// demo modes
 	demoState->demoMode = 0;
-	demoState->demoModeCount = 4;	// ****TO-DO: change mode count to show off all programs
+	demoState->demoModeCount = 9;	// ****TO-DO: change mode count to show off all programs
 
 
 	// initialize other objects 
@@ -1101,6 +1123,7 @@ void a3demo_render(const a3_DemoState *demoState)
 	{
 		// display mode info
 		const char *demoModeText[] = {
+			
 			"Texturing program",
 			"Diffuse shading program",
 			"Lambert shading program",
@@ -1109,6 +1132,11 @@ void a3demo_render(const a3_DemoState *demoState)
 			// ****TO-DO: 
 			//	- add more demo mode names; 
 			//		if you have fewer names than modes it might crash here
+			"Cel shading program",
+			"Gooch shading program",
+			"Cel-Gooch shading program",
+			"TF2 shading program",
+			"Selective coloring program",
 		};
 
 
