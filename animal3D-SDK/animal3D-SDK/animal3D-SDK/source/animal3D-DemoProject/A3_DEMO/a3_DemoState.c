@@ -28,6 +28,10 @@
 */
 
 
+
+//This file was modified by jack malvey with permission from the author
+
+
 #include "a3_DemoState.h"
 
 

@@ -21,6 +21,7 @@
 	drawDiffuse_fs4x.glsl
 	Receive variables for calculating diffuse coefficient, output shading.
 */
+//This file was modified by jack malvey with permission from the author
 
 #version 410
 

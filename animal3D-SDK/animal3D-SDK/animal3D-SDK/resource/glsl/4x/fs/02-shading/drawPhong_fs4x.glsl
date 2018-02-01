@@ -21,6 +21,7 @@
 	drawPhong_fs4x.glsl
 	Receive variables for calculating Phong shading, output result.
 */
+//This file was modified by jack malvey with permission from the author
 
 #version 410
 

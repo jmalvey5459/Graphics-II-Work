@@ -37,6 +37,7 @@ uniform mat4 uMVP;
 
 uniform vec4 uLightPos_obj; 
 
+//This file was modified by jack malvey with permission from the author
 
 //per vertex
 //out float vShading;

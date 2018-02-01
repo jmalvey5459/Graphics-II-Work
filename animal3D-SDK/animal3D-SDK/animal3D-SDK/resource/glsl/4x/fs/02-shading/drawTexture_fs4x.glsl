@@ -21,6 +21,7 @@
 	drawTexture_fs4x.glsl
 	Sample from texture and output color.
 */
+//This file was modified by jack malvey with permission from the author
 
 #version 410
 

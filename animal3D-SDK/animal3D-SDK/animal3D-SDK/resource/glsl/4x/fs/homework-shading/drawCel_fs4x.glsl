@@ -1,4 +1,11 @@
-
+/*
+Jack Malvey - 1005854
+Certificate of Authenticity: “I certify that this work is
+entirely my own. The assessor of this project may reproduce this project
+and provide copies to other academic staff, and/or communicate a copy of
+this project to a plagiarism-checking service, which may retain a copy of the
+project on its database.”
+*/
 #version 410
 
 
@@ -43,8 +50,8 @@ void main()
 	//ramp.x = max(0.0, ramp.x);
 	vec4 toon = texture(uTexToon_dm, diffRamp);
 	vec4 specularToon = texture(uTexToon_sm,specRamp);
-	//toon.a = 0;
-	//specularToon.a = 0;
+	toon.a = 0;
+	specularToon.a = 0;
 
 	//diffuseSample*=toon;
 /*
@@ -61,11 +68,13 @@ void main()
 */
 	//toon.x = max(0.0, toon.x);
 	//specularToon.x = max(0.0, specularToon.x);
-	rtFragColor = (diffuseSample);
-	rtFragColor *= (toon * specularToon);//;diffuseSample;//
-	//rtFragColor.rgb *=  specularToon.x;
-
-	//rtFragColor.a = 1;
+	rtFragColor += (diffuseSample);
+	rtFragColor *= toon.x; // (diffuseSample);//;diffuseSample;//
+	rtFragColor *=  specularToon.x;
+	
+	///I GIVE UP!!
+	//12+ hours is enough tyvm
+	rtFragColor.a = 1;
 
 //rtFragColor = diffuseSample;
 //rtFragColor.rgb *= diffuse;

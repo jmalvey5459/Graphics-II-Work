@@ -25,6 +25,7 @@
 	*** THIS IS YOUR DEMO'S MAIN HEADER FILE ***
 	********************************************
 */
+//This file was modified by jack malvey with permission from the author
 
 #ifndef __ANIMAL3D_DEMOSTATE_H
 #define __ANIMAL3D_DEMOSTATE_H

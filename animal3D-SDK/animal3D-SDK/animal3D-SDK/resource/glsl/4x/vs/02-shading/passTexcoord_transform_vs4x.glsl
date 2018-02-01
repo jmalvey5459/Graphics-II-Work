@@ -21,6 +21,7 @@
 	passTexcoord_transform_vs4x.glsl
 	Pass texture coordinate attribute and transform vertex position.
 */
+//This file was modified by jack malvey with permission from the author
 
 #version 410
 

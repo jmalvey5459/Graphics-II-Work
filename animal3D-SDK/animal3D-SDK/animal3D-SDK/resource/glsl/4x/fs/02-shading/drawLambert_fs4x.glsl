@@ -21,6 +21,7 @@
 	drawLambert_fs4x.glsl
 	Receive variables for calculating Lambertian shading, output result.
 */
+//This file was modified by jack malvey with permission from the author
 
 #version 410
 
