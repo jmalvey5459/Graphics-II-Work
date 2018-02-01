@@ -231,7 +231,7 @@ extern "C"
 					// ****DONE: 
 					//	- declare more programs		
 					
-					prog_drawCel[1],					//draw cel shading model
+					prog_drawGooch[1],					//draw gooch shading model
 					prog_drawPhong[1],					// draw Phong shading model
 					prog_drawLambert[1],				// draw Lambert shading model
 					prog_drawDiffuse[1],				// draw diffuse coefficient

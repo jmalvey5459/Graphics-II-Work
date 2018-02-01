@@ -389,7 +389,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 			// fragment shaders
 			//homework
-			a3_Shader drawCel_fs[1];
+			a3_Shader drawGooch_fs[1];
 			// 02
 			a3_Shader drawPhong_fs[1];
 			a3_Shader drawLambert_fs[1];
@@ -431,7 +431,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 		// fs
 		//homework
-		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawCel_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawGooch_fs4x.glsl" } },
 
 		// 02
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/02-shading/drawPhong_fs4x.glsl" } },
@@ -468,10 +468,10 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 	//homework
 
-	currentDemoProg = demoState->prog_drawCel;
+	currentDemoProg = demoState->prog_drawGooch;
 	a3shaderProgramCreate(currentDemoProg->program);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passPhongComponents_transform_vs);
-	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawCel_fs);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawGooch_fs);
 
 	// 02 programs
 	// Phong shading
@@ -1123,7 +1123,7 @@ void a3demo_render(const a3_DemoState *demoState)
 			// ****TO-DO: 
 			//	- add more demo mode names; 
 			//		if you have fewer names than modes it might crash here
-			"Cel shading program",
+			"Gooch shading program",
 		};
 
 
