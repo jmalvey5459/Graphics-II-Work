@@ -339,7 +339,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 	// list of uniform names: align with uniform list in demo struct!
 	const char *uniformNames[demoStateMaxCount_shaderProgramUniform] = {
-		// ****TO-DO: 
+	
 		//	- add new uniform names in the same order as the related
 		//		variables declared in the shader utility header file
 
@@ -368,7 +368,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	//	those that are shared between programs
 	union {
 		struct {
-			// ****TO-DO: 
 			//	- declare new unique shader objects
 			//		- hint: the purpose of this is to not load shaders multiple times...
 			//			think about shaders that can be reused for multiple programs
@@ -387,10 +386,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// fragment shaders
 			//homework
 			a3_Shader drawCel_fs[1];
-			a3_Shader drawGooch_fs[1];
-			a3_Shader drawCelGooch_fs[1];
-			a3_Shader drawTF2_fs[1];
-			a3_Shader drawSelective_fs[1];
 			// 02
 			a3_Shader drawPhong_fs[1];
 			a3_Shader drawLambert_fs[1];
@@ -416,7 +411,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		//	testing ONLY!  Insert /e before file names.
 		// DO NOT SUBMIT WORK USING ENCODED SHADERS OR YOU WILL GET ZERO!!!
 
-		// ****TO-DO: 
 		//	- load YOUR new shaders in the order corresponding with the 
 		//		unique shader object list
 		//	- reiterating on above notice: no encoded shaders allowed!
@@ -434,10 +428,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// fs
 		//homework
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawCel_fs4x.glsl" } },
-		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawGooch_fs4x.glsl" } },
-		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawCelGooch_fs4x.glsl" } },
-		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawTF2_fs4x.glsl" } },
-		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/homework-shading/drawSelective_fs4x.glsl" } },
+
 		// 02
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/02-shading/drawPhong_fs4x.glsl" } },
 		{ a3shader_fragment,	1, { "../../../../resource/glsl/4x/fs/02-shading/drawLambert_fs4x.glsl" } },
@@ -466,7 +457,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	//	- create program object
 	//	- attach shader objects
 
-	// ****TO-DO: 
 	//	- configure your new shader programs here
 	//	- hint: the 'unique' shaders are already loaded; 
 	//		they are the building blocks for your programs
@@ -568,7 +558,6 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		if ((uLocation = currentDemoProg->uColor) >= 0)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, defaultColor);
 
-		// ****TO-DO: 
 		//	- get locations and set default values for any newly added uniforms
 		
 
@@ -677,7 +666,7 @@ void a3demo_initScene(a3_DemoState *demoState)
 
 	// demo modes
 	demoState->demoMode = 0;
-	demoState->demoModeCount = 9;	// ****TO-DO: change mode count to show off all programs
+	demoState->demoModeCount = 5;	// ****TO-DO: change mode count to show off all programs
 
 
 	// initialize other objects 
@@ -991,8 +980,6 @@ void a3demo_render(const a3_DemoState *demoState)
 	currentDemoProgram = demoState->shaderProgram + (demoState->demoModeCount - demoState->demoMode - 1);
 	a3shaderProgramActivate(currentDemoProgram->program);
 
-
-	// ****TO-DO: 
 	//	- send any additional uniforms depending on whether they 
 	//		are required for the active program
 	//	- you may choose a different way to select your active program; 
@@ -1133,10 +1120,6 @@ void a3demo_render(const a3_DemoState *demoState)
 			//	- add more demo mode names; 
 			//		if you have fewer names than modes it might crash here
 			"Cel shading program",
-			"Gooch shading program",
-			"Cel-Gooch shading program",
-			"TF2 shading program",
-			"Selective coloring program",
 		};
 
 

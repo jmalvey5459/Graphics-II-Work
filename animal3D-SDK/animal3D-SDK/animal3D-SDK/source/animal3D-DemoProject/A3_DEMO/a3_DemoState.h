@@ -229,10 +229,7 @@ extern "C"
 				a3_DemoStateShaderProgram
 					// ****DONE: 
 					//	- declare more programs		
-					prog_drawSelective[1],
-					prog_drawTF2[1],					//draw tf2 shading model
-					prog_drawCelGooch[1],				//draw cel-gooch combined model
-					prog_drawGooch[1],					//draw gooch shading model
+					
 					prog_drawCel[1],					//draw cel shading model
 					prog_drawPhong[1],					// draw Phong shading model
 					prog_drawLambert[1],				// draw Lambert shading model
@@ -246,7 +243,6 @@ extern "C"
 
 
 				// ****TO-DO: 
-				// - declare cross hatch or selective programs
 					
 			};
 		};
