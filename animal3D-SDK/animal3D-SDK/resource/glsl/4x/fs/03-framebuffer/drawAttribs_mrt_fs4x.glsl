@@ -25,21 +25,20 @@
 #version 410
 
 // ****TO-DO: 
-//	1) declare varying block to receive attribute data [x]
-//	2) declare MRT[x]
-//	3) copy inbound data to outbound render targets (might need to compress)[x]
+//	1) declare varying block to receive attribute data
+//	2) declare MRT
+//	3) copy inbound data to outbound render targets (might need to compress)
 
+layout (location = 0) out vec4	rtPosition;
+layout (location = 1) out vec4	rtNormal;
+layout (location = 2) out vec4	rtColor;
+layout (location = 3) out vec4	rtTexcoord;
+layout (location = 4) out vec4	rtTagent;
+layout (location = 5) out vec4	rtBitangent;
+layout (location = 6) out vec4	rtBlendWeight;
+layout (location = 7) out vec4	rtBlendIndices;
 
-//goes to each of the demo modes in order
-layout (location = 0	) out vec4	rtPosition;
-layout (location = 1	) out vec4	rtNormal;
-layout (location = 2	) out vec4	rtColor;
-layout (location = 3	) out vec4	rtTexcoord;
-layout (location = 4	) out vec4	rtTagent;
-layout (location = 5	) out vec4	rtBitangent;
-layout (location = 6	) out vec4	rtBlendWeight;
-layout (location = 7	) out vec4	rtBlendIndices;
-
+//(1)
 in vbPassDataBlock
 {
 	vec4 vPosition;
@@ -54,9 +53,10 @@ in vbPassDataBlock
 
 void main()
 {
+	// DUMMY OUTPUT: all fragments are OPAQUE WHITE
+	//rtFragColor = vec4(1.0, 1.0, 1.0, 1.0);
+	//(3)
 
-
-	//thomas told me about the *0.5 + 0.5 clamp being needed for this
 	rtPosition	   = vec4(normalize(vPassData.vPosition.rgb *0.5)+0.5,1.0);
 	rtNormal	   = vec4(normalize(vPassData.vNormal*0.5)+0.5,1.0);
 	rtColor		   = vec4(vPassData.vColor,1.0);

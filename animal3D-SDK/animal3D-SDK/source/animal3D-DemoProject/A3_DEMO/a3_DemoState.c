@@ -361,6 +361,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// vertex shaders
 			// 03
 			a3_Shader passAttribs_transform_vs[1];
+			a3_Shader passPhongComponents3_transform_vs[1];
+
 			// 02
 			a3_Shader passPhongComponents_transform_vs[1];
 			a3_Shader passLambertComponents_transform_vs[1];
@@ -373,6 +375,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// fragment shaders
 			// 03
 			a3_Shader drawAttribs_mrt_fs[1];
+			a3_Shader drawPhong3_fs[1];
+
 			// 02
 			a3_Shader drawPhong_fs[1];
 			a3_Shader drawLambert_fs[1];
@@ -399,6 +403,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// vs
 		// 03
 		{ a3shader_vertex,		1,{ "../../../../resource/glsl/4x/vs/03-framebuffer/passAttribs_transform_vs4x.glsl" } },
+		{ a3shader_vertex,		1,{ "../../../../resource/glsl/4x/vs/03-framebuffer/passPhongComponents_transform_vs4x.glsl" } },
 		// 02
 		{ a3shader_vertex,		1,{ "../../../../resource/glsl/4x/vs/02-shading/e/passPhongComponents_transform_vs4x.glsl" } },
 		{ a3shader_vertex,		1,{ "../../../../resource/glsl/4x/vs/02-shading/e/passLambertComponents_transform_vs4x.glsl" } },
@@ -411,6 +416,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		// fs
 		// 03
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawAttribs_mrt_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawPhong_fs4x.glsl" } },
+
 		// 02
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/02-shading/e/drawPhong_fs4x.glsl" } },
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/02-shading/e/drawLambert_fs4x.glsl" } },
@@ -442,7 +449,11 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramCreate(currentDemoProg->program);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passAttribs_transform_vs);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawAttribs_mrt_fs);
-
+	//draw phong shit as separate things
+	currentDemoProg = demoState->prog_drawPhong3;
+	a3shaderProgramCreate(currentDemoProg->program);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passPhongComponents3_transform_vs);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawPhong3_fs);
 
 	// 02 programs
 	// Phong shading
@@ -644,7 +655,7 @@ void a3demo_initScene(a3_DemoState *demoState)
 
 	// demo modes
 	demoState->demoMode = 0;
-	demoState->demoModeCount = 8;
+	demoState->demoModeCount = 4;
 
 	demoState->displayDepth = 0;
 	demoState->displayGrid = 1;
@@ -985,7 +996,9 @@ void a3demo_render(const a3_DemoState *demoState)
 
 	// draw models
 	//	currentDemoProgram = demoState->prog_drawPhong;
-	currentDemoProgram = demoState->prog_drawAttribsMRT;
+	//currentDemoProgram = demoState->prog_drawAttribsMRT;
+		currentDemoProgram = demoState->prog_drawPhong3;
+
 	a3shaderProgramActivate(currentDemoProgram->program);
 
 	// ground
@@ -1137,6 +1150,7 @@ void a3demo_render(const a3_DemoState *demoState)
 	{
 		// display mode info
 		const char *demoModeText[] = {
+			/*
 			"Attribute as color 0: position",
 			"Attribute as color 1: normal",
 			"Attribute as color 2: color",
@@ -1144,7 +1158,11 @@ void a3demo_render(const a3_DemoState *demoState)
 			"Attribute as color 4: tangent",
 			"Attribute as color 5: bitangent",
 			"Attribute as color 6: blend weights",
-			"Attribute as color 7: blend indices",
+			"Attribute as color 7: blend indices",*/
+			"Texturing",
+			"Diffuse",
+			"Lambert",
+			"Phong",
 		};
 
 		const float col = (!demoState->displayDepth) ? 1.0f : 0.0f;
