@@ -241,6 +241,7 @@ extern "C"
 					prog_drawAttribsMRT[1],				// draw attributes to MRT
 					prog_drawPhong3[1],					//aspects of phong as separate things
 					prog_HeatMap[1],					//heatmap
+					prog_ComicBook[1],					//half tone cmyk
 
 					prog_drawPhong[1],					// draw Phong shading model
 					prog_drawLambert[1],				// draw Lambert shading model

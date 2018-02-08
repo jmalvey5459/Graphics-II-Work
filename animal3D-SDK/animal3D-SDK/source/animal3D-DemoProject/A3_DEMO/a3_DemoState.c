@@ -379,6 +379,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3_Shader drawAttribs_mrt_fs[1];
 			a3_Shader drawPhong3_fs[1];
 			a3_Shader drawHeatMap_fs[1];
+			a3_Shader drawComic_fs[1];
 
 			// 02
 			a3_Shader drawPhong_fs[1];
@@ -423,6 +424,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawAttribs_mrt_fs4x.glsl" } },
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawPhong_fs4x.glsl" } },
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawHeatMap_fs4x.glsl" } },
+		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/03-framebuffer/drawComic_fs4x.glsl" } },
 
 		// 02
 		{ a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/02-shading/e/drawPhong_fs4x.glsl" } },
@@ -465,7 +467,11 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramCreate(currentDemoProg->program);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passHeatMap_transform_vs);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawHeatMap_fs);
-
+	//comicbook
+	currentDemoProg = demoState->prog_ComicBook;
+	a3shaderProgramCreate(currentDemoProg->program);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passHeatMap_transform_vs);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawComic_fs);
 
 	// 02 programs
 	// Phong shading
@@ -1010,7 +1016,7 @@ void a3demo_render(const a3_DemoState *demoState)
 	//	currentDemoProgram = demoState->prog_drawPhong;
 	//currentDemoProgram = demoState->prog_drawAttribsMRT;
 	//currentDemoProgram = demoState->prog_drawPhong3;
-	currentDemoProgram = demoState->prog_HeatMap;
+	currentDemoProgram = demoState->prog_ComicBook;
 
 	a3shaderProgramActivate(currentDemoProgram->program);
 
@@ -1175,8 +1181,9 @@ void a3demo_render(const a3_DemoState *demoState)
 			/*"Texturing",
 			"Diffuse",
 			"Lambert",
-			"Phong",*/
-			"Heatmap",
+			"Phong",
+			"Heatmap",*/
+			"ComicBook",
 		};
 
 		const float col = (!demoState->displayDepth) ? 1.0f : 0.0f;
