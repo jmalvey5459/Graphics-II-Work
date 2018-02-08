@@ -22,20 +22,20 @@
 	Draw uniform solid color.
 
 	**DO NOT MODIFY THIS FILE**
-	
-	Certifcate of Authenticity:
-	This file was modified by Jack Malvey with permission from author.
-
 */
 
 #version 410
 
+// ****TO-DO: 
+//	1) declare uniform variable for color; see demo code for hints
+//	2) assign uniform variable to output color
 
 out vec4 rtFragColor;
+
 uniform vec4 uColor;
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE WHITE
-	rtFragColor = vec4(1.0, 1.0, 1.0, 1.0);
 	rtFragColor = uColor;
 }
