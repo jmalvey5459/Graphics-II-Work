@@ -49,6 +49,39 @@
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\gs">
       <UniqueIdentifier>{ed1e8a2a-47bd-4453-8c34-d3503170014b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\02-shading">
+      <UniqueIdentifier>{67c4edcc-a78b-44bb-b17b-2ed4455a2fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\02-shading">
+      <UniqueIdentifier>{3f45b2e1-bdac-4173-9c1e-f02188974a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\03-framebuffer">
+      <UniqueIdentifier>{eabb1837-3c3d-4269-a86f-095e5dcf2476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\03-framebuffer">
+      <UniqueIdentifier>{d6ef8e47-6f92-43ea-b596-450694dd650c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\04-multipass">
+      <UniqueIdentifier>{a97e638d-8a59-45bf-afda-739c8ba5406f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\04-multipass">
+      <UniqueIdentifier>{0fce8a2f-746c-4083-a9d6-5649ad3889a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\05-bloom">
+      <UniqueIdentifier>{3360a2a5-6365-4c6b-920a-578e8bd98c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\06-deferred">
+      <UniqueIdentifier>{bf1d0d08-cd97-4e76-ba87-4befc6c2beb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\06-deferred">
+      <UniqueIdentifier>{3a692cf5-e82b-4255-890e-d0caae7f7554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\07-geometry">
+      <UniqueIdentifier>{c3cf1acf-d84b-4357-92f2-76bbb7b58149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\gs\07-geometry">
+      <UniqueIdentifier>{fb2019f4-a8cb-47d5-81a6-61d5bcb3b559}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_src_win\main_dll.c">
@@ -90,6 +123,105 @@
     </None>
     <None Include="..\..\..\resource\glsl\4x\vs\passthru_transform_vs4x.glsl">
       <Filter>Resource Files\A3_DEMO\glsl\4x\vs</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passDiffuseComponents_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passLambertComponents_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passPhongComponents_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passTexcoord_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawLambert_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawPhong_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawTexture_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawDiffuse_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\02-shading</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\03-framebuffer\passAttribs_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\03-framebuffer</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\03-framebuffer\drawAttribs_mrt_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\03-framebuffer</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongProjective_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\04-multipass</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongShadow_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\04-multipass</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongShadowProjective_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\04-multipass</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPostProcessEffects_mrt_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\04-multipass</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\04-multipass\passPhongShadowComponents_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\04-multipass</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postBrightPass_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\05-bloom</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postCompositeBloom_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\05-bloom</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postGaussianBlur_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\05-bloom</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passAttribsView_atlas_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\postCompositeLighting_deferred_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\postCompositeShading_deferred_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawGBuffers_mrt_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawShading_point_deferred_mrt_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawPhong_multilight_mrt_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_instanced_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\06-deferred</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\07-geometry\passInstanceID_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTangentBasis_passColor_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_exploded_passAttribs_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_inverted_passAttribs_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawCurveSegment_passColor_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawLineSegment_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawParticles_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
     </None>
   </ItemGroup>
 </Project>

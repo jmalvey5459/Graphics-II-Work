@@ -22,19 +22,18 @@
 	Pass-thru GLSL vertex shader. Outputs transformed position attribute.
 
 	**DO NOT MODIFY THIS FILE**
-	Certifcate of Authenticity:
-	This file was modified by Jack Malvey with permission from author.
-
 */
 
 #version 410
 
-layout (location = 0) in vec4 aPosition;
+// ****TO-DO: 
+//	1) declare uniform variable for MVP matrix; see demo code for hint
+//	2) correctly transform input position by MVP matrix
 
-uniform mat4 uMVP;
+layout (location = 0) in vec4 aPosition;
 
 void main()
 {
-	//transform input position by MVP matrix 
-	gl_Position = uMVP * aPosition;
+	// DUMMY OUTPUT: directly assign input position to output position
+	gl_Position = aPosition;
 }

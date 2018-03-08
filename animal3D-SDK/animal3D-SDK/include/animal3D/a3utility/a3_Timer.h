@@ -48,8 +48,8 @@ extern "C"
 	//	member secondsPerTick: inverse ticks per second; expected time per tick
 	struct a3_Timer
 	{
-		unsigned int started;
-		unsigned int ticks;
+		unsigned long started;
+		unsigned long long ticks;
 		double totalTime;
 		double previousTick;
 		double currentTick;
@@ -105,6 +105,8 @@ extern "C"
 	//	param ticksPerSecond: tick rate of timer
 	//		if > 0, timer ticks based on time interval
 	//		if <= 0, timer ticks every update while running
+	//		(a time step of zero is known as "continuous" even 
+	//		though this is a misnomer in computing)
 	//	return: 1 if timer set
 	//	return: -1 if invalid param
 	int a3timerSet(a3_Timer *timer, double ticksPerSecond);

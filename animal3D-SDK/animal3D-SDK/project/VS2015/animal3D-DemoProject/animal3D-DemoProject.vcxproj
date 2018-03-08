@@ -192,8 +192,41 @@
     <ClInclude Include="..\..\..\source\animal3D-DemoProject\a3_dylib_config_export.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawDiffuse_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawLambert_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawPhong_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\02-shading\drawTexture_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\03-framebuffer\drawAttribs_mrt_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongProjective_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongShadowProjective_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPhongShadow_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\04-multipass\drawPostProcessEffects_mrt_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postBrightPass_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postCompositeBloom_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\05-bloom\postGaussianBlur_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawGBuffers_mrt_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawPhong_multilight_mrt_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\drawShading_point_deferred_mrt_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\postCompositeLighting_deferred_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\postCompositeShading_deferred_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorAttrib_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorUnif_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawCurveSegment_passColor_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawLineSegment_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawParticles_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTangentBasis_passColor_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_exploded_passAttribs_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_inverted_passAttribs_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passDiffuseComponents_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passLambertComponents_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passPhongComponents_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passTexcoord_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\03-framebuffer\passAttribs_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\04-multipass\passPhongShadowComponents_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passAttribsView_atlas_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_instanced_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\07-geometry\passInstanceID_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\passColor_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\passthru_transform_vs4x.glsl" />
   </ItemGroup>

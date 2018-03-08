@@ -22,29 +22,21 @@
 	Transform position attribute and pass color attribute down the pipeline.
 
 	**DO NOT MODIFY THIS FILE**
-	
-	Certifcate of Authenticity:
-	This file was modified by Jack Malvey with permission from author.
-
 */
 
 #version 410
 
 // ****TO-DO: 
+//	1) declare uniform variable for MVP matrix; see demo code for hint
 //	2) correctly transform input position by MVP matrix
 //	3) declare attribute for vertex color input
 //	4) declare varying to pass color input to fragment shader
 //	5) assign vertex color input to varying
 
 layout (location = 0) in vec4 aPosition;
-//tried 1, 4, 8, 0 (this one was close to what i wanted), 2 then finally 3. 3 works. 
-layout (location = 3) in vec4 vColor;
-out vec4 vColorOut;
-uniform mat4 uMVP;
-
 
 void main()
 {
-	gl_Position = uMVP * aPosition;
-	vColorOut = vColor;
+	// DUMMY OUTPUT: directly assign input position to output position
+	gl_Position = aPosition;
 }

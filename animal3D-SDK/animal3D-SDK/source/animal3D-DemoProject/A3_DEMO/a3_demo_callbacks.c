@@ -120,7 +120,7 @@ A3API a3_DemoState *a3test_load()
 
 	// initialize state variables
 	// e.g. timer, thread, etc.
-	a3timerSet(demoState->renderTimer, 30.0);
+	a3timerSet(demoState->renderTimer, 60.0);
 	a3timerStart(demoState->renderTimer);
 
 	// text
@@ -137,6 +137,9 @@ A3API a3_DemoState *a3test_load()
 
 	// set default GL state
 	a3demo_setDefaultGraphicsState();
+
+	// textures
+	a3demo_loadTextures(demoState);
 
 	// geometry
 	a3demo_loadGeometry(demoState);
@@ -170,6 +173,8 @@ A3API void a3test_unload(a3_DemoState *demoState, int hotload)
 		a3textRelease(demoState->text);
 
 		// free graphics objects
+		a3demo_unloadFramebuffers(demoState);
+		a3demo_unloadTextures(demoState);
 		a3demo_unloadGeometry(demoState);
 		a3demo_unloadShaders(demoState);
 
@@ -289,15 +294,23 @@ A3API void a3test_windowResize(a3_DemoState *demoState, int newWindowWidth, int 
 	demoState->frameWidth = frameWidth;
 	demoState->frameHeight = frameHeight;
 
+	// framebuffers should be initialized or re-initialized here 
+	//	since they are likely dependent on the window size
+	a3demo_unloadFramebuffers(demoState);
+	a3demo_loadFramebuffers(demoState);
+
 	// use framebuffer deactivate utility to set viewport
 	a3framebufferDeactivateSetViewport(a3fbo_depthDisable, -frameBorder, -frameBorder, demoState->frameWidth, demoState->frameHeight);
 
 	// viewing info for projection matrix
-	demoState->camera->aspect = (a3real)frameWidth / (a3real)frameHeight;
+	demoState->sceneCamera->aspect = (a3real)frameWidth / (a3real)frameHeight;
 
 	// initialize cameras dependent on viewport
-	a3real4x4MakePerspectiveProjection(demoState->camera->projectionMat.m, demoState->camera->projectionMatInv.m,
-		demoState->camera->fovy, demoState->camera->aspect, demoState->camera->znear, demoState->camera->zfar);
+	a3real4x4MakePerspectiveProjection(demoState->sceneCamera->projectionMat.m, demoState->sceneCamera->projectionMatInv.m,
+		demoState->sceneCamera->fovy, demoState->sceneCamera->aspect, demoState->sceneCamera->znear, demoState->sceneCamera->zfar);
+
+	a3real4x4MakeOrthographicProjectionPlanes(demoState->editCamera->projectionMat.m, demoState->editCamera->projectionMatInv.m,
+		(a3real)frameWidth, a3realZero, (a3real)frameHeight, a3realZero, demoState->editCamera->znear, demoState->editCamera->zfar);
 }
 
 // any key is pressed
@@ -338,7 +351,7 @@ A3API void a3test_keyCharPress(a3_DemoState *demoState, int asciiKey)
 //		break;
 
 		// reload (T) or toggle (t) text
-	case 'T': 
+	case 'T':
 		if (!a3textIsInitialized(demoState->text))
 		{
 			a3demo_initializeText(demoState->text);
@@ -355,17 +368,63 @@ A3API void a3test_keyCharPress(a3_DemoState *demoState, int asciiKey)
 		break;
 
 		// reload all shaders in real-time
-	case 'P': 
+	case 'P':
 		a3demo_unloadShaders(demoState);
 		a3demo_loadShaders(demoState);
 		break;
 
-		// change modes and toggles
-	case '.':
-		demoState->demoMode = (demoState->demoMode + 1) % demoState->demoModeCount;
+
+		// change pipeline mode
+	case '.': {
+		demoState->demoPipelineMode =
+			(demoState->demoPipelineMode + 1) % demoState->demoPipelineCount;
+	}	break;
+	case ',': {
+		demoState->demoPipelineMode =
+			(demoState->demoPipelineMode + demoState->demoPipelineCount - 1) % demoState->demoPipelineCount;
+	}	break;
+
+		// change pipeline stage
+	case '>': {
+		const unsigned int demoPass = demoState->demoPassMode[demoState->demoPipelineMode], demoPassCount = demoState->demoPassCount[demoState->demoPipelineMode];
+		demoState->demoPassMode[demoState->demoPipelineMode] = (demoPass + 1) % demoPassCount;
+	}	break;
+	case '<': {
+		const unsigned int demoPass = demoState->demoPassMode[demoState->demoPipelineMode], demoPassCount = demoState->demoPassCount[demoState->demoPipelineMode];
+		demoState->demoPassMode[demoState->demoPipelineMode] = (demoPass + demoPassCount - 1) % demoPassCount;
+	}	break;
+
+		// change stage output
+	case '}': {
+		const unsigned int demoPass = demoState->demoPassMode[demoState->demoPipelineMode], demoPassCount = demoState->demoPassCount[demoState->demoPipelineMode];
+		const unsigned int demoOutput = demoState->demoOutputMode[demoState->demoPipelineMode][demoPass], demoOutputCount = demoState->demoOutputCount[demoState->demoPipelineMode][demoPass];
+		demoState->demoOutputMode[demoState->demoPipelineMode][demoPass] = (demoOutput + 1) % demoOutputCount;
+	}	break;
+	case '{': {
+		const unsigned int demoPass = demoState->demoPassMode[demoState->demoPipelineMode], demoPassCount = demoState->demoPassCount[demoState->demoPipelineMode];
+		const unsigned int demoOutput = demoState->demoOutputMode[demoState->demoPipelineMode][demoPass], demoOutputCount = demoState->demoOutputCount[demoState->demoPipelineMode][demoPass];
+		demoState->demoOutputMode[demoState->demoPipelineMode][demoPass] = (demoOutput + demoOutputCount - 1) % demoOutputCount;
+	}	break;
+
+
+		// toggle grid
+	case 'g':
+		demoState->displayGrid = 1 - demoState->displayGrid;
 		break;
-	case ',':
-		demoState->demoMode = (demoState->demoMode + demoState->demoModeCount - 1) % demoState->demoModeCount;
+
+		// toggle axes
+	case 'x':
+		demoState->displayAxes = 1 - demoState->displayAxes;
+		break;
+
+		// toggle skybox
+	case 'b':
+		demoState->displaySkybox = 1 - demoState->displaySkybox;
+		break;
+
+		// toggle tangent basis
+	case 'n':
+		demoState->displayTangentBasis = 1 - demoState->displayTangentBasis;
 		break;
 	}
 }
@@ -383,6 +442,28 @@ A3API void a3test_mouseClick(a3_DemoState *demoState, int button, int cursorX, i
 	// persistent state update
 	a3mouseSetState(demoState->mouse, (a3_MouseButton)button, a3input_down);
 	a3mouseSetPosition(demoState->mouse, cursorX, cursorY);
+
+	// edit waypoints
+	if (demoState->demoPipelineMode == 1)
+	{
+		// add waypoint
+		if (button == a3mouse_left)
+		{
+			if (demoState->waypointCount < demoStateMaxCount_waypoint)
+			{
+				const unsigned int i = demoState->waypointCount++;
+				demoState->waypoint[i] = demoState->waypointHandle[i] = a3wVec4;
+				demoState->waypoint[i].x = demoState->waypointHandle[i].x = (a3real)(cursorX);
+				demoState->waypoint[i].y = demoState->waypointHandle[i].y = (a3real)(demoState->windowHeight - cursorY);
+			}
+		}
+		// remove waypoint
+		else if (button == a3mouse_right)
+		{
+			if (demoState->waypointCount > 0)
+				--demoState->waypointCount;
+		}
+	}
 }
 
 // mouse button is double-clicked
@@ -408,13 +489,16 @@ A3API void a3test_mouseWheel(a3_DemoState *demoState, int delta, int cursorX, in
 	a3mouseSetStateWheel(demoState->mouse, (a3_MouseWheelState)delta);
 	a3mouseSetPosition(demoState->mouse, cursorX, cursorY);
 
-	// can use this to change zoom
-	// zoom should be faster farther away
-	demoState->camera->fovy -= demoState->camera->ctrlZoomSpeed * (demoState->camera->fovy / a3realOneEighty) * (float)delta;
-	demoState->camera->fovy = a3clamp(demoState->camera->ctrlZoomSpeed, a3realOneEighty - demoState->camera->ctrlZoomSpeed, demoState->camera->fovy);
+	if (demoState->demoPipelineMode == 0)
+	{
+		// can use this to change zoom
+		// zoom should be faster farther away
+		demoState->camera->fovy -= demoState->camera->ctrlZoomSpeed * (demoState->camera->fovy / a3realOneEighty) * (float)delta;
+		demoState->camera->fovy = a3clamp(demoState->camera->ctrlZoomSpeed, a3realOneEighty - demoState->camera->ctrlZoomSpeed, demoState->camera->fovy);
 
-	a3real4x4MakePerspectiveProjection(demoState->camera->projectionMat.m, demoState->camera->projectionMatInv.m,
-		demoState->camera->fovy, demoState->camera->aspect, demoState->camera->znear, demoState->camera->zfar);
+		a3real4x4MakePerspectiveProjection(demoState->camera->projectionMat.m, demoState->camera->projectionMatInv.m,
+			demoState->camera->fovy, demoState->camera->aspect, demoState->camera->znear, demoState->camera->zfar);
+	}
 }
 
 // mouse moves
@@ -422,6 +506,17 @@ A3API void a3test_mouseMove(a3_DemoState *demoState, int cursorX, int cursorY)
 {
 	// persistent state update
 	a3mouseSetPosition(demoState->mouse, cursorX, cursorY);
+
+	// adjust waypoint handle
+	if (demoState->demoPipelineMode == 1)
+	{
+		if (demoState->mouse->btn.btn[0] && demoState->waypointCount < demoStateMaxCount_waypoint)
+		{
+			const unsigned int i = demoState->waypointCount - 1;
+			demoState->waypointHandle[i].x = (a3real)(cursorX);
+			demoState->waypointHandle[i].y = (a3real)(demoState->windowHeight - cursorY);
+		}
+	}
 }
 
 // mouse leaves window

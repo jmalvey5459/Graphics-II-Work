@@ -38,6 +38,7 @@ extern "C"
 #else	// !__cplusplus
 	typedef struct a3_DemoSceneObject	a3_DemoSceneObject;
 	typedef struct a3_DemoCamera		a3_DemoCamera;
+	typedef struct a3_DemoPointLight	a3_DemoPointLight;
 #endif	// __cplusplus
 
 	
@@ -51,6 +52,8 @@ extern "C"
 		a3mat4 modelMatInv;	// inverse model matrix: scene relative to this
 		a3vec3 euler;		// euler angles for direct rotation control
 		a3vec3 position;	// scene position for direct control
+		a3vec3 scale;		// scale (not accounted for in update)
+		int scaleMode;		// 0 = off; 1 = uniform; other = non-uniform (nightmare)
 	};
 
 	// camera/viewer
@@ -66,6 +69,17 @@ extern "C"
 		a3real ctrlMoveSpeed;				// how fast controlled camera moves
 		a3real ctrlRotateSpeed;				// control rotate speed (degrees)
 		a3real ctrlZoomSpeed;				// control zoom speed (degrees)
+	};
+
+	// simple point light
+	struct a3_DemoPointLight
+	{
+		a3vec4 worldPos;					// position in world space
+		a3vec4 viewPos;						// position in viewer space
+		a3vec4 color;						// RGB color with padding
+		a3real radius;						// radius (distance of effect from center)
+		a3real radiusInvSq;					// radius inverse squared (attenuation factor)
+		a3real pad[2];						// padding
 	};
 
 

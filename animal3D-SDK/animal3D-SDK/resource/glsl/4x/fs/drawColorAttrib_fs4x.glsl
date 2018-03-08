@@ -22,10 +22,6 @@
 	Draw color attribute passed from prior stage as varying.
 
 	**DO NOT MODIFY THIS FILE**
-	
-	Certifcate of Authenticity:
-	This file was modified by Jack Malvey with permission from author.
-
 */
 
 #version 410
@@ -35,11 +31,10 @@
 //	2) assign vertex color to output color
 
 out vec4 rtFragColor;
-in vec4 vColorOut;
+in vec4 vPassColor;
 
 void main()
 {
-// default red, the entire dimension indicator thing is red so im obviously doing something wrong with the varying color
-	rtFragColor = vec4(1.0, 0.0, 0.0, 1.0);
-	rtFragColor = vColorOut;
+	// DUMMY OUTPUT: all fragments are OPAQUE RED
+	rtFragColor = vPassColor;
 }
