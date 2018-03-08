@@ -466,10 +466,13 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		"uP_inv",
 		"uAtlas",
 
+
 		"uLightPos_obj",
 		"uEyePos_obj",
 
 		// common geometry
+	
+
 		"uParticleCount",
 		"uPathMode",
 		"uPathWaypoint0",
@@ -502,6 +505,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		"uTex_sm",
 		"uPixelSize",
 		"uColor",
+
+
 	};
 	const char *uniformBlockNames[demoStateMaxCount_shaderProgramUniformBlock] = {
 		"ubParticle",
@@ -526,6 +531,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// vertex shaders
 			// 07
 			a3_DemoStateShader passInstanceID_vs[1];
+			a3_DemoStateShader passFlume_vs[1];
+
 			// 06
 			a3_DemoStateShader passAttribsView_atlas_transform_vs[1];
 			// 02
@@ -542,12 +549,16 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3_DemoStateShader drawTangentBasis_passColor_gs[1];
 			a3_DemoStateShader drawTriangleExploded_passAttribs_gs[1];
 			a3_DemoStateShader drawTriangleInverted_passAttribs_gs[1];
-
+			a3_DemoStateShader drawFlumeShader_gs[1];
 			// fragment shaders
+
+			a3_DemoStateShader drawFlumeColor_fs[1];
 			// 06
 			a3_DemoStateShader drawPhong_multilight_mrt_fs[1];
 			// 02
 			a3_DemoStateShader drawTexture_fs[1];
+
+
 			// base
 			a3_DemoStateShader drawColorUnif_fs[1];
 			a3_DemoStateShader drawColorAttrib_fs[1];
@@ -562,6 +573,8 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// vs
 			// 07
 			{ { { 0 },	"Pass instance ID VS",	a3shader_vertex  ,	1,{ "../../../../resource/glsl/4x/vs/07-geometry/passInstanceID_vs4x.glsl" } } },
+			{ { { 0 },	"Draw Flume VS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/vs/07-geometry/flumeShader_vs4x.glsl" } } },
+
 			// 06
 			{ { { 0 },	"Pass g-buff attr VS",	a3shader_vertex  ,	1,{ "../../../../resource/glsl/4x/vs/06-deferred/e/passAttribsView_atlas_transform_vs4x.glsl" } } },
 			// 02
@@ -578,8 +591,11 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"Draw TBN basis GS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/gs/07-geometry/drawTangentBasis_passColor_gs4x.glsl" } } },
 			{ { { 0 },	"Draw tri exploded GS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/gs/07-geometry/drawTriangle_exploded_passAttribs_gs4x.glsl" } } },
 			{ { { 0 },	"Draw tri inverted GS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/gs/07-geometry/drawTriangle_inverted_passAttribs_gs4x.glsl" } } },
-			
+			{ { { 0 },	"Draw Flume GS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/gs/07-geometry/flumeShader_gs4x.glsl" } } },
+
 			// fs
+			//07
+			{ { { 0 },	"Draw Flume FS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/fs/07-geometry/flumeShader_fs4x.glsl" } }},
 			// 06
 			{ { { 0 },	"Phong multi-light FS",	a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/06-deferred/e/drawPhong_multilight_mrt_fs4x.glsl" } } },
 			// 02
@@ -665,6 +681,14 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passAttribsView_atlas_transform_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawPhong_multilight_mrt_fs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawTriangleInverted_passAttribs_gs->shader);
+
+	//Flume Shader
+	currentDemoProg = demoState->prog_drawFlume;
+	strcpy(currentDemoProg->programName, "draw Flume prog");
+	a3shaderProgramCreate(currentDemoProg->program);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passAttribsView_atlas_transform_vs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawPhong_multilight_mrt_fs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawFlumeShader_gs->shader);
 
 
 	// 06 programs
@@ -770,6 +794,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, a3wVec4.v);
 
 		// common GS
+
 		if ((uLocation = currentDemoProg->uParticleCount) >= 0)
 			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultInt);
 		if ((uLocation = currentDemoProg->uPathMode) >= 0)
@@ -788,7 +813,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3shaderUniformSendFloat(a3unif_single, uLocation, 1, defaultFloat);
 		if ((uLocation = currentDemoProg->uPathSegmentParam) >= 0)
 			a3shaderUniformSendFloat(a3unif_single, uLocation, 1, defaultFloat);
-		
+
 		// common FS
 		if ((uLocation = currentDemoProg->uImage0) >= 0)
 			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultTexUnits + 0);
@@ -1586,7 +1611,12 @@ void a3demo_render(const a3_DemoState *demoState)
 			case 2:
 				currentDemoProgram = demoState->prog_drawPhong_multilight_mrt_exploded;
 				break;
+				//flume 
+			case 3:
+				currentDemoProgram = demoState->prog_drawFlume;
+				
 
+				break;
 			
 			}
 			a3shaderProgramActivate(currentDemoProgram->program);
@@ -1868,6 +1898,7 @@ void a3demo_render(const a3_DemoState *demoState)
 				"Scene with lighting",
 				"Scene with lighting (inverted)",
 				"Scene with lighting (exploded)",
+				"Tennis Court Flume",
 			},
 			{
 				"Linear path",

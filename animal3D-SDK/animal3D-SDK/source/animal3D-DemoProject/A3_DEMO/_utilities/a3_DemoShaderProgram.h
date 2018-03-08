@@ -83,6 +83,7 @@ extern "C"
 					uP_inv,						// projection matrix inverse (clip -> view)
 					uAtlas,						// texture atlas matrix (for UVs)
 
+
 					uLightPos_obj,				// light position relative to object
 					uEyePos_obj,				// eye position relative to object
 

@@ -211,12 +211,14 @@
     <None Include="..\..\..\resource\glsl\4x\fs\06-deferred\postCompositeShading_deferred_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorAttrib_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\fs\drawColorUnif_fs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\fs\flumeShader_fs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawCurveSegment_passColor_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawLineSegment_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawParticles_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTangentBasis_passColor_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_exploded_passAttribs_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawTriangle_inverted_passAttribs_gs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\flumeShader_gs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passDiffuseComponents_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passLambertComponents_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\02-shading\passPhongComponents_transform_vs4x.glsl" />
@@ -226,6 +228,7 @@
     <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passAttribsView_atlas_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_instanced_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\06-deferred\passBiasClipPos_transform_vs4x.glsl" />
+    <None Include="..\..\..\resource\glsl\4x\vs\07-geometry\flumeShader_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\07-geometry\passInstanceID_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\passColor_transform_vs4x.glsl" />
     <None Include="..\..\..\resource\glsl\4x\vs\passthru_transform_vs4x.glsl" />

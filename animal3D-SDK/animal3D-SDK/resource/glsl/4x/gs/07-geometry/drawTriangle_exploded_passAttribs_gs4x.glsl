@@ -94,7 +94,7 @@ void explodeTriangle()
 	const float dist =0.2;
 	vec4 n = calcFaceNormal() * dist;
 	vec4 p;
-
+		
 	//vPassData_in.length();
 	for(int i=0; i < 3;++i)
 	{

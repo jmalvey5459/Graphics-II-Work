@@ -306,10 +306,10 @@ extern "C"
 					prog_drawTangentBasis[1],					// draw tangent basis for each vertex using GS, pass color
 					prog_drawPhong_multilight_mrt_exploded[1],	// draw phong with multiple lights, exploded view using GS
 					prog_drawPhong_multilight_mrt_inverted[1],	// draw Phong with multiple lights, invert faces using GS
+					prog_drawFlume[1],							//draw flume shader
 
 					prog_drawPhong_multilight_mrt[1],			// draw Phong with multiple lights
 					prog_drawTexture[1],						// draw sample from texture
-
 					prog_drawColor[1],							// draw color attribute
 					prog_drawColorUnif[1];						// draw uniform color
 

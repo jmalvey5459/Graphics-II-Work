@@ -223,5 +223,14 @@
     <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\drawParticles_gs4x.glsl">
       <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
     </None>
+    <None Include="..\..\..\resource\glsl\4x\vs\07-geometry\flumeShader_vs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\gs\07-geometry\flumeShader_gs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-geometry</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\4x\fs\flumeShader_fs4x.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs</Filter>
+    </None>
   </ItemGroup>
 </Project>
