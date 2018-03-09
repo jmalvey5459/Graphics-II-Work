@@ -41,7 +41,7 @@
 #include <OpenGL/gl3.h>
 #endif	// _WIN32
 
-
+//This file was modified by Jack Malvey with permission from author.
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -471,7 +471,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		"uEyePos_obj",
 
 		// common geometry
-	
+		"uTime",
 
 		"uParticleCount",
 		"uPathMode",
@@ -573,7 +573,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// vs
 			// 07
 			{ { { 0 },	"Pass instance ID VS",	a3shader_vertex  ,	1,{ "../../../../resource/glsl/4x/vs/07-geometry/passInstanceID_vs4x.glsl" } } },
-			{ { { 0 },	"Draw Flume VS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/vs/07-geometry/flumeShader_vs4x.glsl" } } },
+			{ { { 0 },	"Draw Flume VS",	a3shader_vertex,	1,{ "../../../../resource/glsl/4x/vs/07-geometry/flumeShader_vs4x.glsl" } } },
 
 			// 06
 			{ { { 0 },	"Pass g-buff attr VS",	a3shader_vertex  ,	1,{ "../../../../resource/glsl/4x/vs/06-deferred/e/passAttribsView_atlas_transform_vs4x.glsl" } } },
@@ -595,9 +595,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 			// fs
 			//07
-			{ { { 0 },	"Draw Flume FS",	a3shader_geometry,	1,{ "../../../../resource/glsl/4x/fs/07-geometry/flumeShader_fs4x.glsl" } }},
+			{ { { 0 },	"Draw Flume FS",	a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/flumeShader_fs4x.glsl" } }},
 			// 06
-			{ { { 0 },	"Phong multi-light FS",	a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/06-deferred/e/drawPhong_multilight_mrt_fs4x.glsl" } } },
+			{ { { 0 },	"Phong multi-light FS",	a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/06-deferred/drawPhong_multilight_mrt_fs4x.glsl" } } },
 			// 02
 			{ { { 0 },	"Texture FS",			a3shader_fragment,	1,{ "../../../../resource/glsl/4x/fs/02-shading/e/drawTexture_fs4x.glsl" } } },
 			// base
@@ -683,11 +683,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawTriangleInverted_passAttribs_gs->shader);
 
 	//Flume Shader
+	//inspired by this music video: https://youtu.be/8ATu1BiOPZA
 	currentDemoProg = demoState->prog_drawFlume;
 	strcpy(currentDemoProg->programName, "draw Flume prog");
 	a3shaderProgramCreate(currentDemoProg->program);
-	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passAttribsView_atlas_transform_vs->shader);
-	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawPhong_multilight_mrt_fs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passFlume_vs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawFlumeColor_fs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawFlumeShader_gs->shader);
 
 
@@ -794,6 +795,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			a3shaderUniformSendFloat(a3unif_vec4, uLocation, 1, a3wVec4.v);
 
 		// common GS
+
+		if ((uLocation = currentDemoProg->uTime) >= 0)
+			a3shaderUniformSendFloat(a3unif_single, uLocation, 1, defaultFloat);
 
 		if ((uLocation = currentDemoProg->uParticleCount) >= 0)
 			a3shaderUniformSendInt(a3unif_single, uLocation, 1, defaultInt);

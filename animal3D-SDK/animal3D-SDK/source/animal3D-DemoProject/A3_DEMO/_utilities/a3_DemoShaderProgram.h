@@ -88,6 +88,8 @@ extern "C"
 					uEyePos_obj,				// eye position relative to object
 
 					// common geometry shader uniforms
+					uTime,						//for iterating flume
+
 					uParticleCount,				// number of particles in list
 					uPathMode,					// type of path to display for curve-drawing
 					uPathWaypoint0,				// segment start index index for curve-drawing (i)

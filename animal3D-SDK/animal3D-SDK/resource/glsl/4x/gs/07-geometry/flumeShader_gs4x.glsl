@@ -1,6 +1,13 @@
+//HUGELY helpful presentation on subdivison and "sandy" effect
+//http://web.engr.oregonstate.edu/~mjb/cs519/Handouts/geometry_shaders.1pp.pdf
+/*Certificate of Authenticity 
+We certify that this work is entirely our own. The assessor of this project may reproduce this project
+and provide copies to other academic staff, and/or communicate a copy of
+this project to a plagiarism-checking service, which may retain a copy of the
+project on its database.*/
 #version 410
 layout (triangles) in;
-layout (points, max_vertices = 40) out;
+layout (points, max_vertices = 42) out;
 
 
 in vbShadingData
@@ -26,6 +33,8 @@ out vbShadingData
 
 uniform mat4 uP;
 uniform mat4 uMVP;
+//for sale: time uniform- never used :(
+uniform float uTime;
 
 void copyVertex(const int i)
 {
@@ -37,7 +46,8 @@ void copyVertex(const int i)
 }
 vec3 v0, v1, v2;
 vec3 CG;
-
+float dt = 0.25 ;
+vec3 dist;
 
 vec4 calcFaceNormal()
 {
@@ -52,30 +62,30 @@ vec4 calcFaceNormal()
 
 }
 
-vec3 dist;
 void ProduceVertex( float s, float t )
 {
 	vec3 v = v0 + s*v1 + t*v2;
-	vec3 vel = 3.0 * ( v - CG );
+	vec3 vel = 2* ( v - CG );
 	CG = ( v0 + v1 + v2 ) / 3.0;
-	
-	v = CG + vel*0.033 + 0.5*vec3(0.0,-9.81f,0.0)* 0.033 * 0.033;
-	dist = vel;
+	v = CG + vel*dt + 0.5*vec3(0.0,-9.81f,0.0)* dt *dt;
+	dist = v;
 	v = normalize(v);
-	vec4 ECposition = uMVP * vec4( (v), 1 );
-	gl_Position = uP * ECposition;
+	vec4 position = uMVP * vec4( (4*v), 1 );
+	gl_Position = uP * position;
 	EmitVertex();
 }
 
 
 void subDivide()
 {	
-	
+	//get triangle vertices
 	v1 = ( gl_in[1].gl_Position - gl_in[0].gl_Position ).xyz;
 	v2 = ( gl_in[2].gl_Position - gl_in[0].gl_Position ).xyz;
 	v0 = gl_in[0].gl_Position.xyz;
-	int numLayers = 2;
-	float dt = 1.0 / float( numLayers );
+	//decide number of layers, (2^"level")
+	int numLayers = 4;
+	
+	///directly from presentation linked at the top, page 26
 	float t_top = 1.0;
 	for( int it = 0; it < numLayers; it++ )
 	{
@@ -100,15 +110,21 @@ void subDivide()
 		t_bot -= dt;
 	}
 }
+vec4 bezier2(in vec4 p0, in vec4 p1, in vec4 p2, const float t)
+{
+	vec4 bez2 = vec4 ((1 -t)*(1 -t)*p0 + 2 *(1 -t)*t*p1 + t*t*p2);
+	return bez2;
+}
 void explode()
 {
-	
-	float maxDist = 1;
+	//copied over from triangle explode in class, with some minor alterations
+	float maxDist = 4;
 	vec4 endPoint = vec4(dist.x * maxDist, dist.y * maxDist ,dist.z * maxDist,1.0);
-	//lerp!!!
-	vec4 lerp = vec4((1.0 - 0.2)*vec4(dist,1) + (0.2 * endPoint));
+
+	//slerp
+	vec4 bez = bezier2(vec4(CG,1),vec4(dist,1),endPoint,sin(dt));
 	vec4 p;
-	vec4 n = calcFaceNormal() * lerp;
+	vec4 n = calcFaceNormal() * bez;
 	for(int i=0; i < 3;++i)
 	{
 		copyVertex(i);
@@ -119,12 +135,10 @@ void explode()
 }
 void main()
 {
-	
-	
-	gl_PointSize = 2.0;
-	
+	//cut triangles into smaller triangles and emit the resulting vertices
 	subDivide();
-
+	//explode them out from their original location
 	explode();
+	//done
 	EndPrimitive();
 }
